@@ -1,0 +1,21 @@
+{
+	"name": "Twitter Sentiment Analysis",
+	"dockerComposeFile": [
+	  "../docker-compose.yml"
+	],
+	"service": "python-app",
+	"workspaceFolder": "/app",
+	"customizations": {
+	  "vscode": {
+		"extensions": [
+		  "ms-python.python",
+		  "ms-toolsai.jupyter"
+		]
+	  }
+	},
+	"postCreateCommand": "pip install --no-cache-dir -r requirements.txt",
+	"forwardPorts": [
+	  8000, 9092, 9093
+	]
+  }
+  

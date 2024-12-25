@@ -1,0 +1,5 @@
+kafka-python
+tweepy
+confluent-kafka
+pandas
+nltk
