@@ -1,8 +1,16 @@
 FROM python:3.11-slim
 WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-ENTRYPOINT ["python"]
-CMD ["main.py"]
 
+# Copy requirements first for caching
+COPY requirements.txt requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+ENV PYTHONUNBUFFERED=1
+# Copy application files
+COPY . .
+
+# Use ENTRYPOINT for base command
+ENTRYPOINT ["python"]
+
+# Use CMD for default script
+CMD ["main.py"]

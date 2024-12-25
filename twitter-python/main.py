@@ -8,6 +8,8 @@ try:
     print("Connected to Kafka!")
     producer.send('test-topic', b'Test message')
     print("Message sent to Kafka.")
-    time.sleep(100000)
+    # while True:
+    #     time.sleep(60)  # Replace long sleep with periodic checks
+    #     print("Still running...")
 except Exception as e:
     print(f"Error: {e}")
