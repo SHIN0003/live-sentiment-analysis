@@ -9,13 +9,38 @@
 	  "vscode": {
 		"extensions": [
 		  "ms-python.python",
-		  "ms-toolsai.jupyter"
-		]
+		  "ms-toolsai.jupyter",
+		  "ms-python.vscode-pylance",
+		  "ms-python.black-formatter",
+		  "ms-python.flake8",
+		  "ms-python.isort",
+		  "redhat.vscode-yaml",
+		  "eamodio.gitlens",
+		  "GitHub.copilot"
+		],
+		"settings": {
+		  "python.defaultInterpreterPath": "/usr/local/bin/python",
+		  "python.formatting.provider": "black",
+		  "python.linting.enabled": true,
+		  "python.linting.flake8Enabled": true,
+		  "editor.formatOnSave": true,
+		  "editor.codeActionsOnSave": {
+			"source.organizeImports": "always"
+		  }
+		}
 	  }
 	},
-	"postCreateCommand": "pip install --no-cache-dir -r requirements.txt",
+	"postCreateCommand": "pip install --no-cache-dir -r requirements.txt && pip install black flake8 isort",
 	"forwardPorts": [
-	  8000, 9092, 9093
-	]
+	  8000,
+	  9092,
+	  9093
+	],
+	"remoteUser": "root",
+	"shutdownAction": "stopCompose",
+	"initializeCommand": "docker network prune -f",
+	"features": {
+	  "ghcr.io/devcontainers/features/git:1": {},
+	  "ghcr.io/devcontainers/features/github-cli:1": {}
+	}
   }
-  
