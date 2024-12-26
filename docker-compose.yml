@@ -38,7 +38,7 @@ services:
       context: ./twitter-python
       dockerfile: Dockerfile
     volumes:
-      -./twitter-python:/app
+      - ./twitter-python:/app 
     container_name: twitter-python
     ports:
       - "8080:8000" # Expose Python app on port 8080

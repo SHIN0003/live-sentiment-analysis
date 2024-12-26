@@ -11,5 +11,8 @@ try:
     # while True:
     #     time.sleep(60)  # Replace long sleep with periodic checks
     #     print("Still running...")
+    while True:
+        time.sleep(1)
+        print("Still running...")
 except Exception as e:
     print(f"Error: {e}")
