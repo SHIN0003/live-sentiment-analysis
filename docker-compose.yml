@@ -45,5 +45,5 @@ services:
     depends_on:
       kafka:
         condition: service_healthy # Ensure Kafka service is healthy before starting the app
-    environment:
-      KAFKA_BROKER_URL: kafka:9092 # Set Kafka broker URL
+    env_file:
+      - .env
