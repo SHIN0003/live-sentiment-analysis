@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   kafka:
     image: bitnami/kafka:3.9.0
@@ -33,15 +32,47 @@ services:
       timeout: 10s
       retries: 5
 
-  python-app:
+  # python-app:
+  #   build:
+  #     context: ./twitter-python
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./twitter-python:/app 
+  #   container_name: twitter-python
+  #   ports:
+  #     - "8080:8000" # Expose Python app on port 8080
+  #   depends_on:
+  #     kafka:
+  #       condition: service_healthy # Ensure Kafka service is healthy before starting the app
+  #   env_file:
+  #     - .env
+
+  producer:
     build:
       context: ./twitter-python
       dockerfile: Dockerfile
+    command: python /app/main.py
     volumes:
       - ./twitter-python:/app 
-    container_name: twitter-python
+    container_name: producer
     ports:
       - "8080:8000" # Expose Python app on port 8080
+    depends_on:
+      kafka:
+        condition: service_healthy # Ensure Kafka service is healthy before starting the app
+    env_file:
+      - .env
+
+  consumer:
+    build:
+      context: ./twitter-python
+      dockerfile: Dockerfile
+    command: python /app/consumer.py
+    volumes:
+      - ./twitter-python:/app 
+    container_name: consumer
+    ports:
+      - "8090:8001" # Expose Python app on port 8090
     depends_on:
       kafka:
         condition: service_healthy # Ensure Kafka service is healthy before starting the app
