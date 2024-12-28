@@ -4,7 +4,7 @@ import reddit
 
 def main():
     # Get Kafka broker URL from environment variable
-    reddit.test()
+    reddit.fetch_comments()
     producer.start_producer()
 
 
