@@ -3,7 +3,7 @@
 	"dockerComposeFile": [
 	  "../docker-compose.yml"
 	],
-	"service": "python-app",
+	"service": "consumer",
 	"workspaceFolder": "/app",
 	"customizations": {
 	  "vscode": {
@@ -34,7 +34,8 @@
 	"forwardPorts": [
 	  8000,
 	  9092,
-	  9093
+	  9093,
+	  8001
 	],
 	"remoteUser": "root",
 	"shutdownAction": "stopCompose",
