@@ -1,4 +1,6 @@
 from kafka import KafkaConsumer
+from sentiment import analyze
+import nltk
 
 # Connect to Kafka
 def consume(subreddits):
@@ -14,6 +16,7 @@ def consume(subreddits):
     # Consume messages
     for message in consumer:
         if message.key.decode('utf-8') in subreddits:
-            print(f"Received message: {message.value.decode('utf-8')}")
-
+            print(analyze(message.value.decode('utf-8')))
+            
+nltk.download('vader_lexicon')
 consume(subreddits = {"viktormains", "Eldenring"})
