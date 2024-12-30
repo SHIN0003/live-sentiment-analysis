@@ -3,7 +3,7 @@
 	"dockerComposeFile": [
 	  "../docker-compose.yml"
 	],
-	"service": "consumer",
+	"service": "producer",
 	"workspaceFolder": "/app",
 	"customizations": {
 	  "vscode": {

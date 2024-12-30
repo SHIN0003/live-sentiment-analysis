@@ -20,6 +20,7 @@ def fetch_comments_live(subreddits):
         # Feed this into producer? yes
         # try catch loop here
         # print(comment.body)
+        # SEND date for comment
         try:
             producer.send(
                 "reddit-comments",

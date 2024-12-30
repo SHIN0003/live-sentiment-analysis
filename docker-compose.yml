@@ -36,7 +36,7 @@ services:
     build:
       context: ./twitter-python
       dockerfile: Dockerfile
-    command: python /app/main.py
+    command: python /app/producer_main.py
     volumes:
       - ./twitter-python:/app 
     container_name: producer
@@ -52,7 +52,7 @@ services:
     build:
       context: ./twitter-python
       dockerfile: Dockerfile
-    command: python /app/consumer.py
+    command: python /app/consumer_main.py
     volumes:
       - ./twitter-python:/app 
     container_name: consumer
