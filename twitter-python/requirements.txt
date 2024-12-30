@@ -2,5 +2,5 @@ kafka-python
 pandas
 nltk
 python-dotenv
-requests
 praw
+psycopg2-binary

@@ -31,22 +31,7 @@ services:
       interval: 10s
       timeout: 10s
       retries: 5
-
-  # python-app:
-  #   build:
-  #     context: ./twitter-python
-  #     dockerfile: Dockerfile
-  #   volumes:
-  #     - ./twitter-python:/app 
-  #   container_name: twitter-python
-  #   ports:
-  #     - "8080:8000" # Expose Python app on port 8080
-  #   depends_on:
-  #     kafka:
-  #       condition: service_healthy # Ensure Kafka service is healthy before starting the app
-  #   env_file:
-  #     - .env
-
+      
   producer:
     build:
       context: ./twitter-python
@@ -78,3 +63,16 @@ services:
         condition: service_healthy # Ensure Kafka service is healthy before starting the app
     env_file:
       - .env
+  
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+
+volumes:
+  postgres_data:

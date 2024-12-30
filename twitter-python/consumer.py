@@ -1,10 +1,11 @@
 import nltk
 from kafka import KafkaConsumer
-
+import db
 from sentiment import analyze
 
 
 # Connect to Kafka
+# Try catch loop maybe here
 def consume(subreddits=[]):
     consumer = KafkaConsumer(
         "reddit-comments",  # The topic name
@@ -16,6 +17,14 @@ def consume(subreddits=[]):
 
     print("Waiting for messages...")
     # Consume messages
+    conn = db.return_connection()
+    print("Connected to the database!")
+    cursor = conn.cursor()
+    # Example query
+    cursor.execute("SELECT version();")
+    db_version = cursor.fetchone()
+    print("PostgreSQL version:", db_version)
+    db.close_connection(conn, cursor)
     for message in consumer:
         print(analyze(message.value.decode("utf-8")))
 
