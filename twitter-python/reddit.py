@@ -46,7 +46,7 @@ def fetch_top_comments(subreddits=[]):
             for subreddit in subreddits:
                 for submission in reddit.subreddit(subreddit).top(limit=5):
                     submission.comments.replace_more(limit=0)
-                    for top_level_comment in submission.comments:
+                    for top_level_comment in submission.comments:             
                         producer.send(
                             "reddit-comments",
                             value=top_level_comment.body.encode("utf-8"),

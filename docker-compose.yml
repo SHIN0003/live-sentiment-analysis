@@ -31,31 +31,6 @@ services:
       interval: 10s
       timeout: 10s
       retries: 5
-      
-  connect:
-    build:
-      context: ./kafka-connector
-      dockerfile: Dockerfile
-    container_name: kafka-connect
-    depends_on:
-      - kafka
-      - postgres
-    environment:
-      CONNECT_BOOTSTRAP_SERVERS: kafka:9092
-      CONNECT_REST_PORT: 8083
-      CONNECT_GROUP_ID: "kafka-connect-group"
-      CONNECT_REST_ADVERTISED_HOST_NAME: kafka-connect
-      CONNECT_CONFIG_STORAGE_TOPIC: "connect-configs"
-      CONNECT_OFFSET_STORAGE_TOPIC: "connect-offsets"
-      CONNECT_STATUS_STORAGE_TOPIC: "connect-statuses"
-      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      # CONNECT_CONFIG_PROVIDERS: env
-      # CONNECT_CONFIG_PROVIDERS_ENV_CLASS: org.apache.kafka.common.config.provider.EnvConfigProvider
-    ports:
-      - "8083:8083"
 
   producer:
     build:
