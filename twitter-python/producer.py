@@ -8,7 +8,7 @@ from kafka import KafkaProducer
 
 def return_producer_obj():
     kafka_broker = os.getenv("KAFKA_BROKER_URL", "kafka:9092")
-
+    
     print(f"Connecting to Kafka at {kafka_broker}...")
 
     while True:  # Keep trying to connect

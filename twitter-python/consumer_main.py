@@ -1,11 +1,13 @@
+import json
+import time
+
 import nltk
 
 import db
 from consumer import return_consume_obj
-from sentiment import analyze
 from producer import return_producer_obj
-import time
-import json
+from sentiment import analyze
+
 
 def main():
     print("Waiting for messages...")
@@ -20,16 +22,20 @@ def main():
 
     consumer = return_consume_obj()
     producer = return_producer_obj()
-    
-    
-    print(consumer)
+
+
     for message in consumer:
         try:
             resmessage = message.value.decode("utf-8")
-            reskey = message.key.decode("utf-8")
-            print(reskey, resmessage)
+            # reskey = message.key.decode("utf-8")
+            
             res = analyze(resmessage)
-            producer.send("processed-data",value=json.dumps(res, indent=2).encode('utf-8'), key=message.key)
+            print(res)
+            # producer.send(
+            #     "processed-data",
+            #     value=json.dumps(res, indent=2).encode("utf-8"),
+            #     key=message.key,
+            # )
         except Exception as e:
             print(f"Error sending message: {e}")
             time.sleep(5)
