@@ -4,3 +4,4 @@ nltk
 python-dotenv
 praw
 psycopg2-binary
+numpy

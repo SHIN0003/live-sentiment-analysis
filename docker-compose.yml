@@ -67,12 +67,36 @@ services:
   postgres:
     image: postgres:latest
     container_name: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U andrewtai -d sentimentanalysis -h postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     env_file:
       - .env
+
+
+
+  streamlit:
+    build:
+      context: ./streamlit
+      dockerfile: Dockerfile
+    command: streamlit run /app/dashboard.py
+    volumes:
+      - ./streamlit:/app
+    container_name: dashboard
+    ports:
+      - "8501:8501"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+
 
 volumes:
   postgres_data:

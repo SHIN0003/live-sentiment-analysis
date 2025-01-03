@@ -20,7 +20,7 @@ def main():
     
 
     consumer = return_consume_obj()
-    producer = return_producer_obj()
+    # producer = return_producer_obj()
 
 
     for message in consumer:
