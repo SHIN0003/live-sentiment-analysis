@@ -83,11 +83,11 @@ services:
 
   streamlit:
     build:
-      context: ./streamlit
+      context: ./twitter-python
       dockerfile: Dockerfile
     command: streamlit run /app/dashboard.py
     volumes:
-      - ./streamlit:/app
+      - ./twitter-python:/app
     container_name: dashboard
     ports:
       - "8501:8501"
