@@ -114,6 +114,7 @@ def plot(df: pd.DataFrame):
         )
         .interactive()
     )
+    
 
     return chart
 # -------------------------------------------------------------------
