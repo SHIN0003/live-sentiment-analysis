@@ -1,6 +1,7 @@
 import streamlit as st
 import db  # Your custom db module
 import pandas as pd
+import altair as alt
 
 # -------------------------------------------------------------------
 # 1. Database helpers
@@ -27,7 +28,7 @@ def fetch_new_data(last_id):
     """
     conn = db.return_connection()
     cursor = conn.cursor()
-
+    last_id = int(last_id)
     query = """
     SELECT *
     FROM processed_data
@@ -73,7 +74,48 @@ def rows_to_df(rows):
         })
     return pd.DataFrame(flattened_data)
 
+def plot(df: pd.DataFrame):
+    """
+    Calculate the average sentiment over time and plot it.
+    This example groups by day and plots the average 'compound' score.
+    """
+    if df.empty:
+        return None
 
+    # 1. Ensure 'timestamp' is a datetime type
+    df["timestamp"] = pd.to_datetime(df["timestamp"])
+
+    # 2. Group by day (change this to hour, minute, or custom intervals as needed)
+    df["date"] = df["timestamp"].dt.date  # Extract just the date
+    avg_by_date = df.groupby("date")[["compound", "pos", "neg", "neu"]].mean().reset_index()
+
+    # 3. Melt data to plot multiple sentiment measures if desired
+    long_df = avg_by_date.melt(
+        id_vars="date",
+        value_vars=["compound", "pos", "neg", "neu"],
+        var_name="sentiment_type",
+        value_name="sentiment_score"
+    )
+
+    # 4. Create an Altair chart
+    chart = (
+        alt.Chart(long_df)
+        .mark_line(point=True)
+        .encode(
+            x="date:T",
+            y="sentiment_score:Q",
+            color="sentiment_type:N",
+            tooltip=["date:T", "sentiment_type:N", "sentiment_score:Q"],
+        )
+        .properties(
+            title="Average Daily Sentiment Scores",
+            width="container",
+            height=400
+        )
+        .interactive()
+    )
+
+    return chart
 # -------------------------------------------------------------------
 # 3. Main Streamlit app logic
 # -------------------------------------------------------------------
@@ -105,11 +147,16 @@ try:
 
     # Display the entire DataFrame stored in session_state
     st.write(st.session_state["df"])
+    
+    the_chart = plot(st.session_state["df"])
+    if the_chart:
+        st.altair_chart(the_chart, use_container_width=True)
+        #logic of graphing can be done here now with
 
     # If you want periodic refresh:
-    # import time
-    # time.sleep(5)  # Wait 5 seconds
-    # st.rerun()  # Refresh the Streamlit app
+    import time
+    time.sleep(5)  # Wait 5 seconds
+    st.rerun()  # Refresh the Streamlit app
 
 except Exception as e:
     st.error(f"Failed to connect to the database: {e}")

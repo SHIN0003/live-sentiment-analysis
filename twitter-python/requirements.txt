@@ -6,3 +6,4 @@ praw
 psycopg2-binary
 numpy
 streamlit
+altair
