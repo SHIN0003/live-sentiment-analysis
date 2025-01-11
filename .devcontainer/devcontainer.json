@@ -1,5 +1,5 @@
 {
-	"name": "Twitter Sentiment Analysis",
+	"name": "Live Sentiment Analysis",
 	"dockerComposeFile": [
 	  "../docker-compose.yml"
 	],

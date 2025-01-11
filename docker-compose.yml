@@ -34,11 +34,11 @@ services:
 
   producer:
     build:
-      context: ./twitter-python
+      context: ./src
       dockerfile: Dockerfile
     command: python /app/producer_main.py
     volumes:
-      - ./twitter-python:/app 
+      - ./src:/app 
     container_name: producer
     ports:
       - "8080:8000" # Expose Python app on port 8080
@@ -50,11 +50,11 @@ services:
 
   consumer:
     build:
-      context: ./twitter-python
+      context: ./src
       dockerfile: Dockerfile
     command: python /app/consumer_main.py
     volumes:
-      - ./twitter-python:/app 
+      - ./src:/app 
     container_name: consumer
     ports:
       - "8090:8001" # Expose Python app on port 8090
@@ -83,11 +83,11 @@ services:
 
   streamlit:
     build:
-      context: ./twitter-python
+      context: ./src
       dockerfile: Dockerfile
     command: streamlit run /app/dashboard.py
     volumes:
-      - ./twitter-python:/app
+      - ./src:/app
     container_name: dashboard
     ports:
       - "8501:8501"
